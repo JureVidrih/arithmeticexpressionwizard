@@ -152,9 +152,8 @@ public class ArithmeticExpressionWizard {
             // This is where we check, if there is an multiplicaiton or division operation ahead, so that we then perform it first.
             // Also, we check if there is '^' operator ahead. If so, we perform a power operation on the next number.
 
-            System.out.println("i: " + i + ", size: " + numbers.size());
             if (i < (numbers.size() - 2)) {
-                if ((operators.get(i + 1).equals("*") || operators.get(i + 1).equals("/")) && !operators.get(i).equals("*") && !operators.get(i).equals("/")) {
+                if ((operators.get(i + 1).equals("*") || operators.get(i + 1).equals("/") || operators.get(i + 1).equals("%")) && !operators.get(i).equals("*") && !operators.get(i).equals("/") || !operators.get(i + 1).equals("%")) {
                     isTherePrecedence = true;
                 }
             }
@@ -169,6 +168,9 @@ public class ArithmeticExpressionWizard {
                            break;
                     case "/":
                         tempResult = Double.parseDouble(numbers.get(i + 1)) / Double.parseDouble(numbers.get(i + 2));
+                        break;
+                    case "%":
+                        tempResult = Double.parseDouble(numbers.get(i + 1)) % Double.parseDouble(numbers.get(i + 2));
                         break;
                 }
                 operators.remove(i + 1);
@@ -188,6 +190,9 @@ public class ArithmeticExpressionWizard {
                         break;
                     case "/":
                         result /= Double.parseDouble(numbers.get(i + 1));
+                        break;
+                    case "%":
+                        result %= Double.parseDouble(numbers.get(i + 1));
                         break;
                 }
             }
@@ -461,7 +466,7 @@ public class ArithmeticExpressionWizard {
             // add it to the numbers list.
 
             if(!inParentheses) {
-                if(tempChar == '+' || tempChar == '-' || tempChar == '*' || tempChar == '/' || tempChar == '^' || tempChar == ';') {
+                if(tempChar == '+' || tempChar == '-' || tempChar == '*' || tempChar == '/' || tempChar == '%' || tempChar == '^' || tempChar == ';') {
                     if(tempChar != ';') {
                         retObj.addToOperatorsList(String.valueOf(tempChar));
                     }
